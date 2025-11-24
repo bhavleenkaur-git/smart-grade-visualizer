@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="card wide">
+    <h2>All Records</h2>
+
+    {% if grouped %}
+      <table class="data-table">
+        <thead>
+          <tr><th>Name</th><th>Subject</th><th>Marks</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+        {% for name, rows in grouped.items() %}
+          {% set rowspan = rows|length %}
+          {% for pair in rows %}
+            <tr>
+              {% if loop.first %}
+                <td rowspan="{{ rowspan }}">{{ name }}</td>
+              {% endif %}
+              <td>{{ pair[0] }}</td>
+              <td>{{ pair[1] }}</td>
+              {% if loop.first %}
+                <td rowspan="{{ rowspan }}">
+                  <a class="link-danger" href="{{ url_for('delete', name=name) }}" onclick="return confirm('Delete all records for {{name}}?')">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No records yet. <a href="{{ url_for('add_students') }}">Add students</a></p>
+    {% endif %}
+  </section>
+
+  <section class="card wide">
+    <h3>Subject-wise Statistics</h3>
+    {% if stats %}
+      <table class="small-table">
+        <thead><tr><th>Subject</th><th>Average</th><th>Highest</th><th>Lowest</th><th>Graph</th></tr></thead>
+        <tbody>
+        {% for subject, s in stats.items() %}
+          <tr>
+            <td>{{ subject }}</td>
+            <td>{{ '%.2f'|format(s.avg) }}</td>
+            <td>{{ s.max }}</td>
+            <td>{{ s.min }}</td>
+            <td>
+              <a href="{{ url_for('graph', subject=subject) }}" class="btn small">View</a>
+              <a href="{{ url_for('download', subject=subject, fmt='png') }}" class="btn small">PNG</a>
+              <a href="{{ url_for('download', subject=subject, fmt='pdf') }}" class="btn small">PDF</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No subject stats yet.</p>
+    {% endif %}
+  </section>
+
+  {% if show_graph %}
+    <section class="card wide">
+      <h3>Interactive Graph — {{ graph_subject }}</h3>
+
+      <form method="get" action="{{ url_for('graph', subject=graph_subject) }}">
+        <label for="type">Chart type:</label>
+        <select name="type" id="type" onchange="this.form.submit()">
+          <option value="bar" {% if graph_type=='bar' %}selected{% endif %}>Bar</option>
+          <option value="line" {% if graph_type=='line' %}selected{% endif %}>Line</option>
+          <option value="pie" {% if graph_type=='pie' %}selected{% endif %}>Pie</option>
+        </select>
+      </form>
+
+      <div style="width:95%; max-width:900px; margin:16px auto;">
+        <canvas id="subjectChart"></canvas>
+      </div>
+
+      <!-- Chart.js CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <script>
+        // read data passed from Flask into JS variables
+        const ctx = document.getElementById('subjectChart').getContext('2d');
+        const chartType = "{{ graph_type }}";
+        const names = {{ names|tojson }};
+        const marks = {{ marks|tojson }};
+
+        const chart = new Chart(ctx, {
+          type: chartType,
+          data: {
+            labels: names,
+            datasets: [{
+              label: 'Marks in {{ graph_subject }}',
+              data: marks,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)'
+              ],
+              borderColor: 'rgba(0,0,0,0.6)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              tooltip: {
+                enabled: true,
+                callbacks: {
+                  label: function(context) {
+                    // custom tooltip text: StudentName: value marks
+                    return context.label + ': ' + context.parsed + ' marks';
+                  }
+                }
+              },
+              legend: { display: true, position: 'top' },
+              title: { display: true, text: 'Performance in {{ graph_subject }}' }
+            },
+            scales: chartType === 'pie' || chartType === 'doughnut' ? {} : {
+              y: { beginAtZero: true, max: 100 }
+            }
+          }
+        });
+
+        // Client-side chart download as PNG
+        function downloadChart() {
+          const url = chart.toBase64Image();
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = '{{ graph_subject }}.png';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
+      </script>
+
+      <div style="margin-top:12px;">
+        <button class="btn small" onclick="downloadChart()">Download chart (PNG)</button>
+        <a class="btn small" href="{{ url_for('download', subject=graph_subject, fmt='png') }}">Server PNG</a>
+        <a class="btn small" href="{{ url_for('download', subject=graph_subject, fmt='pdf') }}">Server PDF</a>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

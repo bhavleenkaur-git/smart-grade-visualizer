@@ -1,0 +1,84 @@
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f4f7fb;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background: linear-gradient(90deg,#ff9f43,#ff6b6b);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h1 { margin: 0; font-size: 20px; }
+.header nav a { color: rgba(255,255,255,0.95); margin-left: 12px; text-decoration: none; font-weight: 600; }
+
+.main { padding: 24px; min-height: 70vh; }
+.footer { text-align: center; padding: 12px; color: #666; }
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(18,38,63,0.06);
+  max-width: 1100px;
+  margin: 18px auto;
+}
+
+.card.wide { max-width: 1200px; }
+
+h2 { color: #2b2f4a; margin-top: 0; }
+
+input[type="text"], input[type="number"], select {
+  padding: 8px 10px;
+  border: 1px solid #d9e2ef;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 4px;
+  background: #e9eefc;
+  color: #1f2d55;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg,#4f46e5,#1d4ed8);
+  color: white;
+}
+
+.btn.small { padding: 6px 8px; font-size: 0.9em; }
+
+.link-danger { color: #e02424; text-decoration: none; }
+
+.data-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.data-table th, .data-table td {
+  border: 1px solid #eef3fb;
+  padding: 10px;
+  text-align: left;
+}
+.data-table thead th { background: #f9fafb; color: #333; }
+
+.small-table { width: 80%; margin: 12px auto; border-collapse: collapse; }
+.small-table th, .small-table td { padding: 8px; border: 1px solid #eef3fb; }
+
+.graph { max-width: 100%; margin-top: 10px; border-radius: 6px; box-shadow: 0 6px 24px rgba(31,45,85,0.06); }
+
+.flash-wrap { max-width: 1100px; margin: 12px auto; text-align: left; }
+.flash { padding: 8px 12px; border-radius: 6px; margin: 6px 0; }
+.flash.success { background: #ecfdf5; color: #065f46; }
+.flash.error { background: #fff1f2; color: #9f1239; }
+.flash.warning { background: #fff7ed; color: #92400e; }

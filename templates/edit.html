@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="card">
+    <h2>Edit Marks</h2>
+    <form method="POST">
+      <p><strong>Student:</strong> {{ name }}</p>
+      <p><strong>Subject:</strong> {{ subject }}</p>
+      <p>
+        <label>Marks (0-100)</label><br>
+        <input type="number" name="marks" min="0" max="100" value="{{ marks }}" required>
+      </p>
+      <button type="submit" class="btn primary">Update</button>
+      <a href="{{ url_for('display') }}" class="btn">Cancel</a>
+    </form>
+  </section>
+{% endblock %}

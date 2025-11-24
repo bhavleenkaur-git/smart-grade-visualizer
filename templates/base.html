@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Smart Grade Visualizer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="header">
+    <h1>🎓 Smart Grade Visualizer</h1>
+    <nav>
+      <a href="{{ url_for('add_students') }}">Add Students</a>
+      <a href="{{ url_for('display') }}">View Records</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrap">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <small>Smart Grade Visualizer • Python Flask • CSV storage</small>
+  </footer>
+</body>
+</html>

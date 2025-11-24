@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="card wide">
+    <h2>Step 3 — Enter subject names and marks</h2>
+
+    <form method="POST" action="{{ url_for('enter_marks') }}">
+      <input type="hidden" name="num_students" value="{{ num_students }}">
+      <input type="hidden" name="num_subjects" value="{{ num_subjects }}">
+
+      <div class="subjects-row">
+        <h3>Subject names</h3>
+        {% for j in range(num_subjects) %}
+          <input type="text" name="subject_{{ j }}_name" placeholder="Subject {{ j+1 }}" required>
+        {% endfor %}
+      </div>
+
+      <h3>Students and marks</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Student name</th>
+            {% for j in range(num_subjects) %}
+              <th>Marks ({{ j+1 }})</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in range(num_students) %}
+          <tr>
+            <td><input type="text" name="student_{{ i }}_name" placeholder="Student {{ i+1 }}" required></td>
+            {% for j in range(num_subjects) %}
+              <td><input type="number" min="0" max="100" name="student_{{ i }}_subject_{{ j }}_marks" required></td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div style="margin-top:12px;">
+        <button type="submit" class="btn primary">Submit all students</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}

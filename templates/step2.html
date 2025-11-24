@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="card">
+    <h2>Step 2 — Number of Subjects</h2>
+    <p>Students to add: <strong>{{ num_students }}</strong></p>
+    <form method="POST">
+      <label>How many subjects per student?</label><br>
+      <input type="number" name="num_subjects" min="1" required><br><br>
+      <button type="submit" class="btn">Next →</button>
+    </form>
+  </section>
+{% endblock %}
