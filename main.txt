@@ -1,0 +1,298 @@
+====================================================
+          GIT + GITHUB BASIC WORKFLOW GUIDE
+====================================================
+
+----------------------------------------------------
+STEP 1 — Create a New GitHub Repository
+----------------------------------------------------
+1. Go to: https://github.com
+2. Click: New Repository
+3. Enter repository name:
+       smart-grade-visualizer
+   ✔ Use lowercase
+   ✔ Use hyphens
+   ✔ Match your project name
+4. Choose visibility:
+       Public or Private
+5. IMPORTANT:
+       Do NOT add README, .gitignore, or License
+6. Click: Create Repository
+7. Keep the instruction page open.
+
+----------------------------------------------------
+STEP 2 — Create a .gitignore File (Very Important)
+----------------------------------------------------
+Inside PyCharm:
+Right-click project → New → File → Name it:
+
+    .gitignore
+
+Paste this:
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# PyCharm Files
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Sensitive or Local Data
+grades.csv
+
+Why?
+✔ Prevents unnecessary files from uploading
+✔ Keeps repo clean
+✔ Avoids huge/unsafe uploads
+
+----------------------------------------------------
+STEP 3 — Add .gitignore First
+----------------------------------------------------
+    git add .gitignore
+    git commit -m "Added .gitignore file"
+
+Reason:
+Ensures unwanted files are ignored before staging all files.
+
+----------------------------------------------------
+STEP 4 — Stage and Commit All Files
+----------------------------------------------------
+    git add .
+    git commit -m "Initial project upload"
+
+----------------------------------------------------
+STEP 5 — Connect Local Project to GitHub
+----------------------------------------------------
+Copy your repository URL:
+    https://github.com/<your-username>/smart-grade-visualizer.git
+
+Run:
+    git remote add origin https://github.com/<your-username>/smart-grade-visualizer.git
+
+Meaning:
+“origin” = name of the GitHub remote repo.
+
+----------------------------------------------------
+STEP 6 — Set Main Branch (Standard in all companies)
+----------------------------------------------------
+    git branch -M main
+
+----------------------------------------------------
+STEP 7 — Push Project to GitHub
+----------------------------------------------------
+    git push -u origin main
+
+Your project is now uploaded.
+
+====================================================
+        DAILY WORKFLOW USED IN COMPANIES
+====================================================
+
+----------------------------------------------------
+CHECK STATUS OF CHANGES
+----------------------------------------------------
+    git status
+
+Shows which files changed, created, or deleted.
+
+----------------------------------------------------
+STAGE CHANGES
+----------------------------------------------------
+    git add .
+
+----------------------------------------------------
+COMMIT CHANGES
+----------------------------------------------------
+    git commit -m "Your meaningful commit message"
+
+Examples:
+    git commit -m "Added edit student feature"
+    git commit -m "Fixed grade calculation bug"
+
+----------------------------------------------------
+PUSH TO GITHUB
+----------------------------------------------------
+    git push
+
+----------------------------------------------------
+PULL LATEST CHANGES (Very important for teams)
+----------------------------------------------------
+    git pull
+
+ALWAYS run this before starting new work.
+
+----------------------------------------------------
+VIEW COMMIT HISTORY
+----------------------------------------------------
+    git log
+
+----------------------------------------------------
+CREATE A NEW BRANCH
+----------------------------------------------------
+    git branch feature-ui-update
+
+----------------------------------------------------
+SWITCH TO A BRANCH
+----------------------------------------------------
+    git checkout feature-ui-update
+
+----------------------------------------------------
+DELETE A BRANCH
+----------------------------------------------------
+    git branch -d feature-ui-update
+
+====================================================
+         REMOVING A FILE FROM GITHUB ONLY
+  (Keep file locally, remove from remote repository)
+====================================================
+
+----------------------------------------------------
+STEP A — Stop tracking the file but keep it locally
+----------------------------------------------------
+    git rm --cached main.py
+
+----------------------------------------------------
+STEP B — Add the file to .gitignore
+----------------------------------------------------
+Add inside .gitignore:
+    main.py
+
+----------------------------------------------------
+STEP C — Commit & Push
+----------------------------------------------------
+    git add .gitignore
+    git commit -m "Ignored main.py permanently"
+    git push
+
+----------------------------------------------------
+RESULT:
+----------------------------------------------------
+✔ File remains on your PC
+✔ File completely removed from GitHub
+✔ Git will ignore it forever
+
+====================================================
+              GLOSSARY (Quick Meanings)
+====================================================
+
+Repository (repo)
+    A storage space where your project lives.
+
+Commit
+    A snapshot of your project at one moment in time.
+
+Branch
+    A separate working line for features/experiments.
+
+Main
+    The primary branch where final code stays.
+
+Remote
+    The GitHub version of your project.
+
+Origin
+    Default name of the remote repository.
+
+Push
+    Send your changes to GitHub.
+
+Pull
+    Download the latest changes from GitHub.
+
+Staging (git add)
+    Selecting which files you want to commit.
+
+
+
+====================================================
+     EXAMPLE: HOW TO ADD & DELETE A FILE IN GIT
+====================================================
+
+-----------------------------
+PART 1 — Adding a New File
+-----------------------------
+
+Example file:  "notes.txt"
+
+STEP 1 — Create the file inside your project folder.
+
+STEP 2 — Check the status:
+    git status
+(Shows untracked files in red)
+
+STEP 3 — Stage the file:
+    git add notes.txt
+
+STEP 4 — Commit the file:
+    git commit -m "Added notes.txt file"
+
+STEP 5 — Push to GitHub:
+    git push
+
+RESULT:
+✔ The file is now uploaded to GitHub.
+
+
+
+-----------------------------
+PART 2 — Deleting a File From GitHub
+(BUT keeping it locally on your PC)
+-----------------------------
+
+Example file:  "main.py"
+
+STEP 1 — Stop tracking the file:
+    git rm --cached main.py
+
+Meaning:
+Git will no longer track changes to main.py, but **will not delete it from your computer**.
+
+STEP 2 — Add the file to .gitignore:
+(open .gitignore and add)
+    main.py
+
+This prevents future accidental uploads.
+
+STEP 3 — Commit the change:
+    git add .gitignore
+    git commit -m "Removed main.py from tracking and added to .gitignore"
+
+STEP 4 — Push to GitHub:
+    git push
+
+RESULT:
+✔ main.py is removed from GitHub
+✔ main.py stays safely on your computer
+✔ Git will ignore it forever
+
+
+====================================================
+SUMMARY OF COMMANDS USED
+====================================================
+
+ADD NEW FILE:
+    git add <filename>
+    git commit -m "message"
+    git push
+
+DELETE FILE FROM REPO ONLY:
+    git rm --cached <filename>
+    (add filename to .gitignore)
+    git commit -m "message"
+    git push
+
+====================================================
