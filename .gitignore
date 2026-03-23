@@ -15,6 +15,7 @@ env/
 
 # Logs
 *.log
+main.txt
 
 # System Files
 .DS_Store
@@ -22,6 +23,3 @@ Thumbs.db
 
 # Sensitive data or local CSV
 grades.csv
-
-#Git notes
-main.txt
